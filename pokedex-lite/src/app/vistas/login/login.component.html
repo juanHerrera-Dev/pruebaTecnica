@@ -14,9 +14,9 @@
       <input type="submit" class="fadeIn fourth" value="Log In">
     </form>
 
-    <!-- Remind Passowrd -->
-    <div id="formFooter">
-      <a class="underlineHover" href="#">Forgot Password?</a>
+    <!-- error alert -->
+    <div class="alert alert-danger" *ngIf="invalidUser">
+      <p>{{errorMsj}}</p>
     </div>
 
   </div>

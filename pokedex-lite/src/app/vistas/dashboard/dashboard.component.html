@@ -1,1 +1,28 @@
-<p>dashboard works!</p>
+<app-header></app-header>
+
+    <div class="container">
+
+        <h3>List of Pokemons</h3><br>
+
+        <button type="button" class="btn btn-primary" (click)="addNewPokemon()">Primary</button><br>
+
+        <table class="table">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">id</th>
+                <th scope="col">name</th>
+                <th scope="col">lvl</th>
+                <th scope="col">type</th>    
+            </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let pokemon of pokemons" (click)="editPokemon(pokemon.id,pokemon)">
+                    <th scope="row">{{pokemon.id}}</th>
+                    <td>{{pokemon.name}}</td>
+                    <td>{{pokemon.lvl}}</td>
+                    <td>{{pokemon.type}}</td>
+                </tr>
+            </tbody>  
+        </table>
+    </div>
+<app-footer></app-footer>
