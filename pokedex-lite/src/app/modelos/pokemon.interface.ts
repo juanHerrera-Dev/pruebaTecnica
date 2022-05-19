@@ -1,7 +1,7 @@
 export interface PokemonI {
         id: number;
         name: string;
-        lvl: 0;
+        lvl: number;
         evolutionId: number;
         abilities: [
           {

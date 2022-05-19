@@ -1,4 +1,78 @@
 <app-header></app-header>
+    <div class="container">
+        <h3>New Pokemon view</h3><br>
+        <form [formGroup]="editForm" (ngSubmit)="postForm(editForm.value)">
+            <div class="form-group row">
+                <div class="col">
+                <label for="exampleFormControlInput1">name</label>
+                <input type="text" class="form-control" placeholder="pokemon name" formControlName="name">
+                </div>
+                <div class="col">
+                <label for="exampleFormControlInput1">lvl</label>
+                <input type="text" class="form-control" placeholder="pokemon lvl" formControlName="lvl">
+                </div>
+                <div class="col">
+                <label for="exampleFormControlInput1">type</label>
+                <input type="text" class="form-control" placeholder="pokemon type" formControlName="type">
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col">
+                <label for="exampleFormControlInput1">image</label>
+                <input type="text" class="form-control" placeholder="pokemon image" formControlName="image">
+                </div>
+                <div class="col">
+                <label for="exampleFormControlInput1">id</label>
+                <input type="text" class="form-control" placeholder="pokemon id" formControlName="id">
+                </div>
+                <div class="col">
+                <label for="exampleFormControlInput1">evolutionId</label>
+                <input type="text" class="form-control" placeholder="pokemon evolutionId" formControlName="evolutionId">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlInput1">abilities</label>
+                <input type="text" class="form-control" placeholder="pokemon abilities" formControlName="abilities">
+            </div><br><br>
+            <button type="submit" class="btn btn-primary">create pokemon</button>
+            
+        </form>
+    </div>
+        <!-- 
+                estructura pokemon post
+                {"pokemon":{
+                        "id": 1,
+                        "name": "Bulbasaur",
+                        "lvl": 4,
+                        "evolutionId": 2,
+                        "abilities": [
+                            {
+                                "name": "Latigo cepas",
+                                "description": "Latigo cepa causa daño y no tiene ningún efecto secundario."
+                            },
+                        
+                            {
+                                "name": "Polvo veneno",
+                                "description": "Polvo veneno envenena al objetivo."
+                            }
+                        ],
+                        "type": [
+                            "grass"
+                        ],
+                        "image": "assets/bulbasaur.png"
+                    },
+                    "userId": "1"
+                }    
 
-
+            estructura pokemon put
+            editForm = new FormGroup({
+                id: new FormControl(''),
+                name: new FormControl(''),
+                lvl: new FormControl(''),
+                type: new FormControl(''),
+                image: new FormControl(''),
+                evolutionId: new FormControl(''),
+                abilities: new FormControl('')
+            });
+            -->
 <app-footer></app-footer>
