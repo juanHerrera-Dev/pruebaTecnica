@@ -9,7 +9,8 @@ https://cors-anywhere.herokuapp.com/corsdemo ingresar a este link y tocar el bot
 sirve para simular que la peticion no es de un usuario y evitar problemas de cors.
 
 2)Casi todas las funcionalidades completas excepto el POST de un pokemon que por alguna razon no pude, en el postman me funciono y el PUT si lo pude hacer.
-para actualizar un pokemon se puede hacer click en cualquier parte de la tabla que corresponda al pokemon(quedo pendiente colocar un boton).
+
+Para actualizar un pokemon se puede hacer click en cualquier parte de la tabla que corresponda al pokemon(quedo pendiente colocar un boton).
 
 3)Hay muchas cosas a mejorar como la UI , validaciones , entre otras cosas. Pero por tema tiempo quedaron pendientes.
 
