@@ -16,7 +16,7 @@
             </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let pokemon of pokemons" (click)="editPokemon(pokemon.id,pokemon)">
+                <tr *ngFor="let pokemon of pokemons" (click)="editPokemon(pokemon.id)">
                     <th scope="row">{{pokemon.id}}</th>
                     <td>{{pokemon.name}}</td>
                     <td>{{pokemon.lvl}}</td>

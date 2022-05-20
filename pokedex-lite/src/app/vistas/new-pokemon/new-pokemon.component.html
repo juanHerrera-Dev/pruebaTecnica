@@ -1,7 +1,7 @@
 <app-header></app-header>
     <div class="container">
         <h3>New Pokemon view</h3><br>
-        <form [formGroup]="editForm" (ngSubmit)="postForm(editForm.value)">
+        <form [formGroup]="newForm" (ngSubmit)="postForm(newForm)">
             <div class="form-group row">
                 <div class="col">
                 <label for="exampleFormControlInput1">name</label>
@@ -34,7 +34,7 @@
                 <label for="exampleFormControlInput1">abilities</label>
                 <input type="text" class="form-control" placeholder="pokemon abilities" formControlName="abilities">
             </div><br><br>
-            <button type="submit" class="btn btn-primary">create pokemon</button>
+            <button type="submit" class="btn btn-primary" >create pokemon</button>
             
         </form>
     </div>

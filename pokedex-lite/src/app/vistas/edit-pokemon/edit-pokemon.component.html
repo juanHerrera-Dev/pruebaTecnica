@@ -1,8 +1,9 @@
 <app-header></app-header>
 
     <div class="container">
-        <h3>Edit Pokemon view</h3><br>
-          <form [formGroup]="editForm" (ngSubmit)="postForm(editForm.value)">
+        <h3>Edit Pokemon view</h3><br>  
+
+          <form [formGroup]="editForm" (ngSubmit)="postForm(editForm)">
               <div class="form-group row">
                 <div class="col">
                   <label for="exampleFormControlInput1">name</label>
@@ -16,41 +17,18 @@
                   <label for="exampleFormControlInput1">type</label>
                   <input type="text" class="form-control" placeholder="pokemon type" formControlName="type">
                 </div>
-              </div>
+              </div><!--
               <div class="form-group">
                 <label for="exampleFormControlInput1">abilities</label>
                 <input type="text" class="form-control" placeholder="pokemon abilities" formControlName="abilities">
-              </div><br><br>
-              <button type="submit" class="btn btn-primary">update pokemon</button>
+              </div>-->
               
+              <br><br>
+              <button type="submit" class="btn btn-primary" >update pokemon</button>
+              <p>
+              
+              </p>
           </form>
-      <!-- 
-
-          editForm = new FormGroup({
-              id: new FormControl(''),
-              name: new FormControl(''),
-              lvl: new FormControl(''),
-              type: new FormControl(''),
-              image: new FormControl(''),
-              evolutionId: new FormControl(''),
-              abilities: new FormControl('')
-          });
-
-          <div *ngIf="load" class="card" style="width: 18rem;">
-            <img class="card-img-top" src="{{pokemonToEdit.image}}" alt="Card image cap">
-            <div class="card-body">
-              <h5 class="card-title">{{pokemonToEdit.name}}  <strong>{{pokemonToEdit.lvl}}</strong></h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            </div>
-            <ul class="list-group list-group-flush">
-              <li class="list-group-item">type: {{pokemonToEdit.type}}</li>
-              <li class="list-group-item">abilities: </li>
-              <li class="list-group-item" *ngFor="let abilitie of pokemonToEdit.abilities">{{abilitie.name}}: {{abilitie.description}} </li>
-            </ul>
-            <div class="card-body">
-              <button type="button" class="btn btn-primary" >guardar</button>
-              <a href="#" class="card-link">Another link</a>
-            </div>
-          </div>-->
+      
     </div>
 <app-footer></app-footer>

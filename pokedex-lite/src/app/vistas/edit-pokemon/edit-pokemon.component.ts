@@ -1,11 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {  Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormGroup,FormControl,Validators } from '@angular/forms';
+import { FormGroup,FormControl } from '@angular/forms';
 
 import { PokemonI } from 'src/app/modelos/pokemon.interface';
-import { EmitterService } from 'src/app/servicios/emitter.service';
+
 import { ApiService } from 'src/app/servicios/api/api.service';
-import { Observable } from 'rxjs';
+
 
 @Component({
   selector: 'app-edit-pokemon',
@@ -14,7 +14,7 @@ import { Observable } from 'rxjs';
 })
 export class EditPokemonComponent implements OnInit {
   
-   load!: boolean;
+   
    pokemonToEdit!: PokemonI;
    editForm = new FormGroup({
       id: new FormControl(''),
@@ -26,43 +26,65 @@ export class EditPokemonComponent implements OnInit {
       abilities: new FormControl('')
   });
 
-  constructor(private api:ApiService, private activerouter:ActivatedRoute, private router:Router, private emitter:EmitterService) { }
+  
+
+  constructor(private api:ApiService, private activerouter:ActivatedRoute, private router:Router) { 
+
+    
+  }
 
   ngOnInit(): void {
-    this.emitter.dataEmitter.subscribe(data => {
-      this.pokemonToEdit= data;
-      this.load= true;
-      this.editForm.setValue({
-        'id': this.pokemonToEdit.id,
-        'name': this.pokemonToEdit.name,
-        'lvl': this.pokemonToEdit.lvl,
-        'type': this.pokemonToEdit.type,
-        'image': this.pokemonToEdit.image,
-        'evolutionId': this.pokemonToEdit.evolutionId,
-        'abilities': this.pokemonToEdit.abilities,
-      })
-      console.log('formulario a enviar:',this.editForm.value);
-      console.log('pokemon recibido:',data);
-      console.log('pokemon almacenado a espera',this.pokemonToEdit);
-      console.log('this es dentro de ngOnInit:',this)
+    
+    this.api.getAllPokemons().subscribe(data =>{
+      
+      let pokemonid = this.activerouter.snapshot.paramMap.get('id');
+      
+      let filteredPokemon= data.find(pokemon => (pokemon.id.toString()) === pokemonid );
+      
+      this.setPokemon(filteredPokemon);
+      
+    })
+  
+  }
+  setPokemon(data:any){
+    
+    this.pokemonToEdit = data;
+    
+    this.editForm.setValue({
+      'id': this.pokemonToEdit.id,
+      'name': this.pokemonToEdit.name,
+      'lvl': this.pokemonToEdit.lvl.toString(),
+      'type': this.pokemonToEdit.type.toString(),
+      'image': this.pokemonToEdit.image,
+      'evolutionId': this.pokemonToEdit.evolutionId,
+      'abilities': this.pokemonToEdit.abilities,
     });
-    console.log('this es:',this)
-    console.log('pokemon almacenado a inicio',this.pokemonToEdit);
-    console.log(this.load);
-    /*
-    let pokemonid = this.activerouter.snapshot.paramMap.get('id');
-    console.log(pokemonid);*/
+
   }
 
-  postForm(form:PokemonI){
-      /*
-      this.api.putPokemon.(form).subscribe((data: any) =>{
-        console.log(data);
-        //this.router.navigate(['dashboard']);
+  postForm(form:FormGroup){
+      
+      form.patchValue({ lvl:  Number(form.value.lvl)});
+      form.patchValue({ type: [form.value.type]});
+      // cambio el tipo del pokemon de string a array para poder hacer el put correctamente
+
+      this.api.putPokemon(form.value).subscribe((data: any) =>{
+
+        
+        form.patchValue({ type: form.value.type.toString()});
+        form.patchValue({ lvl: form.value.lvl.toString()});
+
+        this.router.navigate(['dashboard']);
+
+      },(error: any) =>{
+        console.log('error catcheado',error);
+
+        form.patchValue({ type: form.value.type.toString()});
+        form.patchValue({ lvl: form.value.lvl.toString()});
+        //mostrar al usuario que hubo un error
       })
-      //nada por ahora
-      ya lo voy a hacer pero tengo problemas para ver como manejar lo que vuelve
-      */
+
   }
-  
+      
+      
 }

@@ -1,10 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { EmitterService } from 'src/app/servicios/emitter.service';
+
 import { ApiService } from 'src/app/servicios/api/api.service';
 
 import { PokemonI } from 'src/app/modelos/pokemon.interface';
+
+const isNotNull = (elem: any) => !!elem 
 
 @Component({
   selector: 'app-dashboard',
@@ -16,21 +18,28 @@ export class DashboardComponent implements OnInit {
   @Input()pokemonToEdit!: PokemonI;
   pokemons: PokemonI[] = [];
 
-  constructor(private api:ApiService, private router:Router, private emitter:EmitterService) { }
+  constructor(private api:ApiService, private router:Router) { }
 
   ngOnInit(): void {
     this.api.getAllPokemons().subscribe(data =>{
-      console.log(data);
-    this.pokemons=data
+      
+      this.pokemons = this.filterPokemons(data);
+      
     })
   }
-  editPokemon(id:number,pokemon:PokemonI){
+  editPokemon(id:number){
     
-    this.emitter.dataEmitter.emit(pokemon);
     this.router.navigate(['editPokemon', id]);
+    
+
   }
   addNewPokemon(){
     this.router.navigate(['newPokemon']);
   }
+  private filterPokemons(pokemons:PokemonI[]){
 
+    return pokemons.filter(isNotNull);
+  }
+  
 }
+
