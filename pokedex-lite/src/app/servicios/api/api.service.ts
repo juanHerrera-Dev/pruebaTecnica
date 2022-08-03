@@ -14,7 +14,8 @@ import { NewPokemonI } from 'src/app/modelos/new-pokemon';
 })
 export class ApiService {
 
-  url:string = "https://cors-anywhere.herokuapp.com/https://testing.certant.com/pokedex-api/";
+  url:string = "/pokedex-api/";
+  //url2:string = "https://cors-anywhere.herokuapp.com/https://testing.certant.com/pokedex-api/";
 
   constructor(private http:HttpClient) { }
 
