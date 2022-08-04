@@ -8,6 +8,12 @@
                 <div class="col">
                   <label for="exampleFormControlInput1">name</label>
                   <input type="text" class="form-control" placeholder="pokemon name" formControlName="name">
+                  <div
+                    *ngIf="editForm.get('name')?.touched && editForm.get('name')?.errors?.['required']"
+                    class="alert alert-danger"
+                  >
+                    *este campo es requerido
+                  </div>
                 </div>
                 <div class="col">
                   <label for="exampleFormControlInput1">lvl</label>

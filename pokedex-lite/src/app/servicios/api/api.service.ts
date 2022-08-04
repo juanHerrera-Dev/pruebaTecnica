@@ -22,16 +22,14 @@ export class ApiService {
   loginByUser(form:LoginI):Observable<ResponseI>{
     
     let direccion = this.url + "login";
-    let errorResponse: ResponseI = {userId: "0",username:""};
+    
 
     return this.http.post<ResponseI>(direccion,form)
-                   .pipe(
-                     catchError(this.handleError<ResponseI>(errorResponse))
-                   );
+    
   }
 
   getAllPokemons():Observable<PokemonI[]>{
-    let direccion = this.url + "pokemon?userId=" + localStorage.getItem('userId');
+    let direccion = this.url + "pokemon?userId=" + sessionStorage.getItem('userId');
     return this.http.get<PokemonI[]>(direccion);
   }
   
@@ -39,24 +37,20 @@ export class ApiService {
     let direccion = this.url + "pokemon";
 
     return this.http.put(direccion,form)
-                   .pipe(
-                     catchError(this.handleError())
-                   );
+                   
   } 
 
   postPokemon(form:NewPokemonI){
     let direccion = this.url + "pokemon";
 
     return this.http.post(direccion,form)
-                   .pipe(
-                     catchError(this.handleError())
-                   );
+                   
   } 
-
+  /*
   private handleError<T>( result?: T) {
     return (error: any): Observable<T> => {
       
       return of(result as T);
     };
-  }
+  }*/
 }

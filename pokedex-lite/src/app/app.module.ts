@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule} from '@angular/common/http';
 
@@ -12,15 +12,8 @@ import { DashboardComponent } from './vistas/dashboard/dashboard.component';
 import { LoginComponent } from './vistas/login/login.component';
 import { NewPokemonComponent } from './vistas/new-pokemon/new-pokemon.component';
 import { EditPokemonComponent } from './vistas/edit-pokemon/edit-pokemon.component';
+import { AppRoutingModule } from './app-routing.module';
 
-
-const appRoutes: Routes =[
-  {path:'' , redirectTo:'login' , pathMatch:'full'},
-  {path:'login', component: LoginComponent},
-  {path:'dashboard', component: DashboardComponent},
-  {path:'newPokemon', component: NewPokemonComponent},
-  {path:'editPokemon/:id', component: EditPokemonComponent}
-];
 
 @NgModule({
   declarations: [
@@ -38,7 +31,7 @@ const appRoutes: Routes =[
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
-    RouterModule.forRoot(appRoutes)
+    AppRoutingModule,
   ],
   exports:[
     RouterModule

@@ -1,6 +1,6 @@
 import {  Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormGroup,FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 
 import { PokemonI } from 'src/app/modelos/pokemon.interface';
 
@@ -16,7 +16,7 @@ export class EditPokemonComponent implements OnInit {
   
    
    pokemonToEdit!: PokemonI;
-   editForm = new FormGroup({
+   editForm: FormGroup = new FormGroup({
       id: new FormControl(''),
       name: new FormControl(''),
       lvl: new FormControl(''),
@@ -28,28 +28,29 @@ export class EditPokemonComponent implements OnInit {
 
   
 
-  constructor(private api:ApiService, private activerouter:ActivatedRoute, private router:Router) { 
-
+  constructor(private api:ApiService, private activerouter:ActivatedRoute, private router:Router, private fb: FormBuilder) { 
     
   }
 
   ngOnInit(): void {
     
-    this.api.getAllPokemons().subscribe(data =>{
-      
-      let pokemonid = this.activerouter.snapshot.paramMap.get('id');
-      
-      let filteredPokemon= data.find(pokemon => (pokemon.id.toString()) === pokemonid );
-      
-      this.setPokemon(filteredPokemon);
-      
-    })
+    this.initEditComponent();
   
   }
   setPokemon(data:any){
     
     this.pokemonToEdit = data;
-    
+    /*
+    this.editForm = this.fb.group({
+      id: [this.pokemonToEdit.id,[Validators.required]],
+      name: [this.pokemonToEdit.name,[Validators.required]],
+      lvl: this.pokemonToEdit.lvl.toString(),
+      type: this.pokemonToEdit.type.toString(),
+      image: this.pokemonToEdit.image,
+      evolutionId: this.pokemonToEdit.evolutionId,
+      abilities: this.pokemonToEdit.abilities,
+    });
+    */
     this.editForm.setValue({
       'id': this.pokemonToEdit.id,
       'name': this.pokemonToEdit.name,
@@ -59,7 +60,7 @@ export class EditPokemonComponent implements OnInit {
       'evolutionId': this.pokemonToEdit.evolutionId,
       'abilities': this.pokemonToEdit.abilities,
     });
-
+  
   }
 
   postForm(form:FormGroup){
@@ -83,7 +84,17 @@ export class EditPokemonComponent implements OnInit {
         form.patchValue({ lvl: form.value.lvl.toString()});
         //mostrar al usuario que hubo un error
       })
-
+  }
+  initEditComponent():void{
+    this.api.getAllPokemons().subscribe(data =>{
+      
+      let pokemonid = this.activerouter.snapshot.paramMap.get('id');
+      
+      let filteredPokemon= data.find(pokemon => (pokemon.id.toString()) === pokemonid );
+      
+      this.setPokemon(filteredPokemon);
+      
+    })
   }
       
       

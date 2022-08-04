@@ -1,6 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-
+import { Component, OnInit } from '@angular/core';
 
 import { ApiService } from 'src/app/servicios/api/api.service';
 
@@ -15,31 +13,28 @@ const isNotNull = (elem: any) => !!elem
 })
 export class DashboardComponent implements OnInit {
 
-  @Input()pokemonToEdit!: PokemonI;
   pokemons: PokemonI[] = [];
 
-  constructor(private api:ApiService, private router:Router) { }
+  constructor(private api:ApiService) { }
 
   ngOnInit(): void {
+    this.initDashboard();
+  }
+
+  private initDashboard():void{
     this.api.getAllPokemons().subscribe(data =>{
       
       this.pokemons = this.filterPokemons(data);
       
-    })
+    },error => {
+      console.log("se produjo un error al cargar el dashboard" + error.message)
+    }
+    )
   }
-  editPokemon(id:number){
-    
-    this.router.navigate(['editPokemon', id]);
-    
 
-  }
-  addNewPokemon(){
-    this.router.navigate(['newPokemon']);
-  }
   private filterPokemons(pokemons:PokemonI[]){
 
     return pokemons.filter(isNotNull);
   }
-  
 }
 

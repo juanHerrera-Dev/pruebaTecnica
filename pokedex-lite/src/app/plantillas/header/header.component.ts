@@ -12,21 +12,10 @@ export class HeaderComponent implements OnInit {
   constructor(private api:ApiService, private router:Router) { }
 
   ngOnInit(): void {
-    
-    this.checkLocalStorage();
-    /*lo hago porque como el componente header esta en todas las views(dashboard,newPokemon,editPokemon)
-    me aseguro de proteger las rutas si no hay un usuario logeado y navego al login
-    */
-  }
-
-  checkLocalStorage(){
-    if(!localStorage.getItem('userId')){
-      this.router.navigate(['login']);
-    }
   }
 
   logOutUser(){
-    localStorage.removeItem('userId');
+    sessionStorage.removeItem('userId');
     this.router.navigate(['login']);
   }
 }

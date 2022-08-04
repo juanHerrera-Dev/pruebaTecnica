@@ -16,8 +16,6 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-  
-
   loginForm = new FormGroup({
     username: new FormControl('',Validators.required),
     password: new FormControl('',Validators.required)
@@ -29,32 +27,21 @@ export class LoginComponent implements OnInit {
   constructor( private api:ApiService, private router:Router ) { }
 
   ngOnInit(): void {
-    this.checkLocalStorage();
-  }
-
-  checkLocalStorage(){
-    if(localStorage.getItem('userId')){
-      this.router.navigate(['dashboard']);
-    }
+    
   }
 
   onLogin(form: LoginI){
     
-    this.api.loginByUser(form).subscribe(data =>{
+    this.api.loginByUser(form).subscribe((data) =>{
       let dataResponse: ResponseI = data;
+      sessionStorage.setItem('userId',dataResponse.userId);
+      this.router.navigate(['dashboard']);
+      this.invalidUser = false;
       
-      if(dataResponse.userId !== "0" ){
-        localStorage.setItem('userId',dataResponse.userId);//lo guardo como si fuera un token
-        //this.userId= dataResponse.userId;
-        this.router.navigate(['dashboard']);
-        this.invalidUser = false;
-      }
-      else{
-        this.invalidUser = true;
-        this.errorMsj = "invalid username or password";
-      }
+    },(error) => {
+      this.invalidUser = true;
+      this.errorMsj = "invalid username or password";
+      console.log(error.message);
     });
   }
-
-
 }

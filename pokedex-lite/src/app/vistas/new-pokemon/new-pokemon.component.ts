@@ -42,7 +42,7 @@ export class NewPokemonComponent implements OnInit {
     
     let newPokemon: NewPokemonI = {
       pokemon: form.value,
-      userId: localStorage.getItem("userId")!
+      userId: sessionStorage.getItem("userId")!
     }
     this.api.postPokemon(newPokemon).subscribe((data: any) =>{
 

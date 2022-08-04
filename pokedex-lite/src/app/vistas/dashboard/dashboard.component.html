@@ -4,7 +4,7 @@
 
         <h3>List of Pokemons</h3><br>
 
-        <button type="button" class="btn btn-primary" (click)="addNewPokemon()">add Pokemon</button><br>
+        <button type="button" class="btn btn-primary" [routerLink]="['/newPokemon']" >add Pokemon</button><br>
 
         <table class="table">
             <thead class="thead-dark">
@@ -16,11 +16,12 @@
             </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let pokemon of pokemons" (click)="editPokemon(pokemon.id)">
+                <tr *ngFor="let pokemon of pokemons" >
                     <th scope="row">{{pokemon.id}}</th>
                     <td>{{pokemon.name}}</td>
                     <td>{{pokemon.lvl}}</td>
                     <td>{{pokemon.type}}</td>
+                    <td><button type="button" class="btn btn-primary" [routerLink]="['/editPokemon', pokemon.id]" >edit Pokemon</button></td>
                 </tr>
             </tbody>  
         </table>
