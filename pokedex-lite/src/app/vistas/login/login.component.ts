@@ -35,6 +35,7 @@ export class LoginComponent implements OnInit {
     this.api.loginByUser(form).subscribe((data) =>{
       let dataResponse: ResponseI = data;
       sessionStorage.setItem('userId',dataResponse.userId);
+      sessionStorage.setItem('userName',dataResponse.username);
       this.router.navigate(['dashboard']);
       this.invalidUser = false;
       

@@ -33,9 +33,31 @@
             <div class="form-group">
                 <label for="exampleFormControlInput1">abilities</label>
                 <input type="text" class="form-control" placeholder="pokemon abilities" formControlName="abilities">
-            </div><br><br>
-            <button type="submit" class="btn btn-primary" >create pokemon</button>
-            
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlInput1">description of abilities</label>
+                <input type="text" class="form-control" placeholder="pokemon abilities" formControlName="description">
+            </div>
+            <br><br>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">create pokemon</button>
+        
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+                <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Confirm New pokemon</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                    are you sere to create this pokemon?
+                    </div>
+                    <div class="modal-footer">
+                    <button type="submit" class="btn btn-secondary" data-bs-dismiss="modal">confirm</button>
+                    </div>
+                </div>
+                </div>
+            </div>
         </form>
     </div>
 <app-footer></app-footer>

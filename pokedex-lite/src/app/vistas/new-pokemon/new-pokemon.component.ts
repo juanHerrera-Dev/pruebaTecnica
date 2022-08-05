@@ -22,7 +22,8 @@ export class NewPokemonComponent implements OnInit {
         type: new FormControl(''),
         image: new FormControl(''),
         evolutionId: new FormControl(''),
-        abilities: new FormControl('')
+        abilities: new FormControl(''),
+        description: new FormControl('')
   });
 
   constructor(private api:ApiService, private activerouter:ActivatedRoute, private router:Router) { }
@@ -32,36 +33,56 @@ export class NewPokemonComponent implements OnInit {
 
   postForm(form:FormGroup){
     
-    
+    let abilities = {
+      name: form.value.abilities,
+      description: form.value.description
+    }
+    /*
     form.patchValue({ evolutionId: Number(form.value.evolutionId)});
     form.patchValue({ lvl: Number(form.value.lvl)});
     form.patchValue({ id: Number(form.value.id)});
     form.patchValue({ type: [form.value.type]});
-    form.patchValue({ abilities: [form.value.abilities]});
-
+    form.patchValue({ abilities: [abilities]});
+    */
     
     let newPokemon: NewPokemonI = {
-      pokemon: form.value,
+      pokemon: {
+        id: Number(form.value.id),
+        name: form.value.name,
+        lvl: Number(form.value.lvl),
+        evolutionId: Number(form.value.evolutionId),
+        abilities: [
+          abilities
+        ],
+        type: [
+          form.value.type
+        ],
+        image: form.value.image
+      },
+
       userId: sessionStorage.getItem("userId")!
     }
+    
     this.api.postPokemon(newPokemon).subscribe((data: any) =>{
-
+      /*
       form.patchValue({ evolutionId: form.value.evolutionId.toString()});
       form.patchValue({ lvl: form.value.lvl.toString()});
       form.patchValue({ id: form.value.id.toString()});
       form.patchValue({ type: form.value.type.toString()});
       form.patchValue({ abilities: form.value.abilities.toString()});
+      */
       this.router.navigate(['dashboard']);
-
+      
     },(error: any) =>{
-      console.log('error catcheado',error);
-
+      console.log('error catcheado' + error);
+      /*
       form.patchValue({ evolutionId: form.value.evolutionId.toString()});
       form.patchValue({ lvl: form.value.lvl.toString()});
       form.patchValue({ id: form.value.id.toString()});
       form.patchValue({ type: form.value.type.toString()});
       form.patchValue({ abilities: form.value.abilities.toString()});
+      */
     })
-  }
-     
+    
+  }  
 }

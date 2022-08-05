@@ -12,7 +12,8 @@ const isNotNull = (elem: any) => !!elem
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-
+  
+  userName: any;
   pokemons: PokemonI[] = [];
 
   constructor(private api:ApiService) { }
@@ -20,8 +21,13 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     this.initDashboard();
   }
+  
+  deletePokemon(pokemon: PokemonI):void{
+    console.log(pokemon);
+  }
 
   private initDashboard():void{
+    this.userName = sessionStorage.getItem('userName');
     this.api.getAllPokemons().subscribe(data =>{
       
       this.pokemons = this.filterPokemons(data);
