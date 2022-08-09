@@ -5,6 +5,9 @@ import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
 import { PokemonI } from 'src/app/modelos/pokemon.interface';
 
 import { ApiService } from 'src/app/servicios/api/api.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModalComponent } from 'src/app/modal/modal.component';
+
 
 
 @Component({
@@ -28,15 +31,20 @@ export class EditPokemonComponent implements OnInit {
 
   
 
-  constructor(private api:ApiService, private activerouter:ActivatedRoute, private router:Router, private fb: FormBuilder) { 
+  constructor(private api:ApiService, 
+    private activerouter:ActivatedRoute, 
+    private router:Router, 
+    private fb: FormBuilder,
+    private modalService: NgbModal
+    
+    ) { 
     
   }
 
   ngOnInit(): void {
-    
     this.initEditComponent();
-  
   }
+
   setPokemon(data:any){
     
     this.pokemonToEdit = data;
@@ -64,29 +72,42 @@ export class EditPokemonComponent implements OnInit {
   }
 
   postForm(form:FormGroup){
+
+      const modalRef = this.modalService.open(ModalComponent).result
+      .then( (result) =>{
+
+          form.patchValue({ lvl:  Number(form.value.lvl)});
+          form.patchValue({ type: [form.value.type]});
+          // cambio el tipo del pokemon de string a array para poder hacer el put correctamente
+    
+          this.api.putPokemon(form.value).subscribe((data: any) =>{
+    
+            
+            form.patchValue({ type: form.value.type.toString()});
+            form.patchValue({ lvl: form.value.lvl.toString()});
+    
+            this.router.navigate(['dashboard']);
+    
+          },(error: any) =>{
+            console.log('error catcheado',error);
+
+            const modalRef = this.modalService.open(ModalComponent);
+            modalRef.componentInstance.confirmationModal= false;
+            modalRef.componentInstance.message = "error in EditPokemon, error: " + error.message;
+    
+            form.patchValue({ type: form.value.type.toString()});
+            form.patchValue({ lvl: form.value.lvl.toString()});
+            //mostrar al usuario que hubo un error
+          })
+      },(reason) =>{/*por ahora no hace nada solo lo hice para agarrar el caso en que se cierra el modal */}
+      );
+       
+
       
-      form.patchValue({ lvl:  Number(form.value.lvl)});
-      form.patchValue({ type: [form.value.type]});
-      // cambio el tipo del pokemon de string a array para poder hacer el put correctamente
-
-      this.api.putPokemon(form.value).subscribe((data: any) =>{
-
-        
-        form.patchValue({ type: form.value.type.toString()});
-        form.patchValue({ lvl: form.value.lvl.toString()});
-
-        this.router.navigate(['dashboard']);
-
-      },(error: any) =>{
-        console.log('error catcheado',error);
-
-        form.patchValue({ type: form.value.type.toString()});
-        form.patchValue({ lvl: form.value.lvl.toString()});
-        //mostrar al usuario que hubo un error
-      })
   }
   initEditComponent():void{
-    this.api.getAllPokemons().subscribe(data =>{
+    let userId= sessionStorage.getItem('userId');
+    this.api.getAllPokemons(userId?userId:"").subscribe(data =>{
       
       let pokemonid = this.activerouter.snapshot.paramMap.get('id');
       

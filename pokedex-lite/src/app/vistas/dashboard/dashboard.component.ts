@@ -28,10 +28,11 @@ export class DashboardComponent implements OnInit {
 
   private initDashboard():void{
     this.userName = sessionStorage.getItem('userName');
-    this.api.getAllPokemons().subscribe(data =>{
-      
+
+    var userId= sessionStorage.getItem('userId');
+    
+    this.api.getAllPokemons(userId?userId:"").subscribe(data =>{
       this.pokemons = this.filterPokemons(data);
-      
     },error => {
       console.log("se produjo un error al cargar el dashboard" + error.message)
     }
@@ -39,7 +40,6 @@ export class DashboardComponent implements OnInit {
   }
 
   private filterPokemons(pokemons:PokemonI[]){
-
     return pokemons.filter(isNotNull);
   }
 }

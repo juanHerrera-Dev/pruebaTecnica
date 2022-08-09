@@ -16,35 +16,24 @@ export class ApiService {
 
   url:string = "/pokedex-api/";
   //url2:string = "https://cors-anywhere.herokuapp.com/https://testing.certant.com/pokedex-api/";
+  
 
   constructor(private http:HttpClient) { }
 
   loginByUser(form:LoginI):Observable<ResponseI>{
-    
-    let direccion = this.url + "login";
-    
-
-    return this.http.post<ResponseI>(direccion,form)
-    
+    return this.http.post<ResponseI>(this.url + "login", form);
   }
 
-  getAllPokemons():Observable<PokemonI[]>{
-    let direccion = this.url + "pokemon?userId=" + sessionStorage.getItem('userId');
-    return this.http.get<PokemonI[]>(direccion);
+  getAllPokemons(userId: string):Observable<PokemonI[]>{
+    return this.http.get<PokemonI[]>(this.url + "pokemon?userId=" + userId);
   }
   
   putPokemon(form:PokemonI){
-    let direccion = this.url + "pokemon";
-
-    return this.http.put(direccion,form)
-                   
+    return this.http.put(this.url + "pokemon", form);               
   } 
 
   postPokemon(form:NewPokemonI){
-    let direccion = this.url + "pokemon";
-
-    return this.http.post(direccion,form)
-                   
+    return this.http.post(this.url + "pokemon", form);               
   } 
   /*
   private handleError<T>( result?: T) {

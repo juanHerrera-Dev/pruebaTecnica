@@ -1,0 +1,13 @@
+<div class="modal-header">
+  <h4 class="modal-title">Pokedex-lite</h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
+</div>
+<div class="modal-body">
+  <div [ngClass]="!confirmationModal ? 'alert alert-danger':''">
+    <p *ngIf="!confirmationModal">invalid username or password, please try again! <br> error description:{{message}}!</p>
+    <p *ngIf="confirmationModal"> please confirm to save changes!</p>
+  </div>
+</div>
+<div class="modal-footer" *ngIf="confirmationModal">
+  <button type="button" class="btn btn-outline-primary" (click)="activeModal.close('Close click')">Accept</button>
+</div>

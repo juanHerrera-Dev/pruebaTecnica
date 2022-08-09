@@ -13,6 +13,9 @@ import { LoginComponent } from './vistas/login/login.component';
 import { NewPokemonComponent } from './vistas/new-pokemon/new-pokemon.component';
 import { EditPokemonComponent } from './vistas/edit-pokemon/edit-pokemon.component';
 import { AppRoutingModule } from './app-routing.module';
+import { ErrorComponent } from './vistas/error/error.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ModalComponent } from './modal/modal.component';
 
 
 @NgModule({
@@ -24,6 +27,8 @@ import { AppRoutingModule } from './app-routing.module';
     DashboardComponent,
     NewPokemonComponent,
     EditPokemonComponent,
+    ErrorComponent,
+    ModalComponent,
 
   ],
   imports: [
@@ -32,6 +37,7 @@ import { AppRoutingModule } from './app-routing.module';
     FormsModule,
     HttpClientModule,
     AppRoutingModule,
+    NgbModule,
   ],
   exports:[
     RouterModule
