@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
     }, error => {
       this.invalidUser = true;
 
-      const modalRef = this.modalService.open(ModalComponent);
+      const modalRef = this.modalService.open(ModalComponent,{ size: 'lg', centered: true });
       modalRef.componentInstance.confirmationModal= false;
       modalRef.componentInstance.message = "error in Login, error: " + error.message;
     });

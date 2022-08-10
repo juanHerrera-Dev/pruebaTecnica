@@ -14,7 +14,7 @@ const appRoutes: Routes =[
     {path:'' , redirectTo:'login' , pathMatch:'full'},
     {path:'login', component: LoginComponent, canActivate:[LogeduserGuard]},
     {path:'dashboard', component: DashboardComponent, canActivate:[LoginGuard] },
-    {path:'newPokemon', component: NewPokemonComponent, canActivate:[LoginGuard]},
+    {path:'newPokemon/:id', component: NewPokemonComponent, canActivate:[LoginGuard]},
     {path:'editPokemon/:id', component: EditPokemonComponent, canActivate:[LoginGuard]},
     {path:'**', component: ErrorComponent}
     

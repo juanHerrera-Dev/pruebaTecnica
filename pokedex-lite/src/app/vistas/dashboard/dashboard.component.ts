@@ -14,6 +14,7 @@ const isNotNull = (elem: any) => !!elem
 export class DashboardComponent implements OnInit {
   
   userName: any;
+  newPokemonId!: number;
   pokemons: PokemonI[] = [];
 
   constructor(private api:ApiService) { }
@@ -33,10 +34,15 @@ export class DashboardComponent implements OnInit {
     
     this.api.getAllPokemons(userId?userId:"").subscribe(data =>{
       this.pokemons = this.filterPokemons(data);
+      this.setNewPokemonId();
+      console.log("el id del nuevo pokemon es:" + this.newPokemonId);
     },error => {
       console.log("se produjo un error al cargar el dashboard" + error.message)
     }
     )
+  }
+  private setNewPokemonId():void{
+     this.newPokemonId= this.pokemons[this.pokemons.length - 1].id + 1;//obtengo el id del ultimo pokemon del array y le sumo 1
   }
 
   private filterPokemons(pokemons:PokemonI[]){

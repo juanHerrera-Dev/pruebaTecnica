@@ -3,8 +3,8 @@
   <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
 </div>
 <div class="modal-body">
-  <div [ngClass]="!confirmationModal ? 'alert alert-danger':''">
-    <p *ngIf="!confirmationModal">invalid username or password, please try again! <br> error description:{{message}}!</p>
+  <div [ngClass]=" !confirmationModal ? 'alert alert-danger':'' ">
+    <p *ngIf="!confirmationModal"> invalid username or password, please try again! <br> error description:{{message}}!</p>
     <p *ngIf="confirmationModal"> please confirm to save changes!</p>
   </div>
 </div>

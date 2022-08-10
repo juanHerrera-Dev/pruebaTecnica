@@ -29,8 +29,6 @@ export class EditPokemonComponent implements OnInit {
       abilities: new FormControl('')
   });
 
-  
-
   constructor(private api:ApiService, 
     private activerouter:ActivatedRoute, 
     private router:Router, 

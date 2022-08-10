@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModalComponent } from 'src/app/modal/modal.component';
 
 import { NewPokemonI } from 'src/app/modelos/new-pokemon';
 import { PokemonI } from 'src/app/modelos/pokemon.interface';
@@ -16,7 +18,7 @@ export class NewPokemonComponent implements OnInit {
 
   pokemonToCreate!: PokemonI;
   newForm = new FormGroup({
-        id: new FormControl(''),
+        id: new FormControl(this.activerouter.snapshot.paramMap.get('id')),
         name: new FormControl(''),
         lvl: new FormControl(''),
         type: new FormControl(''),
@@ -26,63 +28,48 @@ export class NewPokemonComponent implements OnInit {
         description: new FormControl('')
   });
 
-  constructor(private api:ApiService, private activerouter:ActivatedRoute, private router:Router) { }
+  constructor(private api:ApiService, 
+              private router:Router, 
+              private modalService: NgbModal,
+              private activerouter:ActivatedRoute,
+            ) { }
 
   ngOnInit(): void {
   }
 
   postForm(form:FormGroup){
     
-    let abilities = {
-      name: form.value.abilities,
-      description: form.value.description
-    }
-    /*
-    form.patchValue({ evolutionId: Number(form.value.evolutionId)});
-    form.patchValue({ lvl: Number(form.value.lvl)});
-    form.patchValue({ id: Number(form.value.id)});
-    form.patchValue({ type: [form.value.type]});
-    form.patchValue({ abilities: [abilities]});
-    */
-    
-    let newPokemon: NewPokemonI = {
-      pokemon: {
-        id: Number(form.value.id),
-        name: form.value.name,
-        lvl: Number(form.value.lvl),
-        evolutionId: Number(form.value.evolutionId),
-        abilities: [
-          abilities
-        ],
-        type: [
-          form.value.type
-        ],
-        image: form.value.image
-      },
+    const modalRef = this.modalService.open(ModalComponent).result
+    .then((result) => {
 
-      userId: sessionStorage.getItem("userId")!
-    }
-    
-    this.api.postPokemon(newPokemon).subscribe((data: any) =>{
-      /*
-      form.patchValue({ evolutionId: form.value.evolutionId.toString()});
-      form.patchValue({ lvl: form.value.lvl.toString()});
-      form.patchValue({ id: form.value.id.toString()});
-      form.patchValue({ type: form.value.type.toString()});
-      form.patchValue({ abilities: form.value.abilities.toString()});
-      */
-      this.router.navigate(['dashboard']);
-      
-    },(error: any) =>{
-      console.log('error catcheado' + error);
-      /*
-      form.patchValue({ evolutionId: form.value.evolutionId.toString()});
-      form.patchValue({ lvl: form.value.lvl.toString()});
-      form.patchValue({ id: form.value.id.toString()});
-      form.patchValue({ type: form.value.type.toString()});
-      form.patchValue({ abilities: form.value.abilities.toString()});
-      */
-    })
-    
+          let abilities = {
+            name: form.value.abilities,
+            description: form.value.description
+          }
+          
+          let newPokemon: NewPokemonI = {
+            pokemon: {
+              id: Number(form.value.id),
+              name: form.value.name,
+              lvl: Number(form.value.lvl),
+              evolutionId: Number(form.value.evolutionId),
+              abilities: [
+                abilities
+              ],
+              type: [
+                form.value.type
+              ],
+              image: form.value.image
+            },
+            userId: sessionStorage.getItem("userId")!
+          }
+          
+          this.api.postPokemon(newPokemon).subscribe((data: any) =>{
+              this.router.navigate(['dashboard']);
+          },(error: any) =>{
+            console.log('error catcheado' + error);
+          })
+          },(reason) =>{/*por ahora no hace nada solo lo hice para agarrar el caso en que se cierra el modal */}
+    )
   }  
 }
