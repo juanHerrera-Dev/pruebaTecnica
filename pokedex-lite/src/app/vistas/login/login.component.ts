@@ -8,6 +8,7 @@ import { ResponseI } from '../../modelos/response.interface';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalComponent } from 'src/app/modal/modal.component';
+import { Utils } from 'src/app/utils/utils';
 
 
 
@@ -26,7 +27,7 @@ export class LoginComponent implements OnInit {
   //userId!: string;
   invalidUser: boolean = false;
   errorMsj: string = "";
-  constructor( private api:ApiService, private router:Router, private modalService: NgbModal ) { }
+  constructor( private api:ApiService, private router:Router, private utils:Utils  ) { }
 
   ngOnInit(): void {
     
@@ -44,9 +45,7 @@ export class LoginComponent implements OnInit {
     }, error => {
       this.invalidUser = true;
 
-      const modalRef = this.modalService.open(ModalComponent,{ size: 'lg', centered: true });
-      modalRef.componentInstance.confirmationModal= false;
-      modalRef.componentInstance.message = "error in Login, error: " + error.message;
+      this.utils.abrirModal(error);
     });
   }
 }

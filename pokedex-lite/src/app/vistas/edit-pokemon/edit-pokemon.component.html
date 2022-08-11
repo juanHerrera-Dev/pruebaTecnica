@@ -17,7 +17,7 @@
                 </div>
                 <div class="col">
                   <label for="exampleFormControlInput1">lvl</label>
-                  <input type="text" class="form-control" placeholder="pokemon lvl" formControlName="lvl">
+                  <input type="number" class="form-control" placeholder="pokemon lvl" formControlName="lvl">
                 </div>
                 <div class="col">
                   <label for="exampleFormControlInput1">type</label>
@@ -33,7 +33,7 @@
               -->
               
               <br><br>
-              <button type="submit" class="btn btn-primary" >update pokemon</button>
+              <button type="submit" class="btn btn-primary" [disabled]="editForm.invalid">update pokemon</button>
               <p>
               
               </p>

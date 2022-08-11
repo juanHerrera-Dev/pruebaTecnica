@@ -16,6 +16,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { ErrorComponent } from './vistas/error/error.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ModalComponent } from './modal/modal.component';
+import { Utils } from './utils/utils';
 
 
 @NgModule({
@@ -42,7 +43,7 @@ import { ModalComponent } from './modal/modal.component';
   exports:[
     RouterModule
   ],
-  providers: [],
+  providers: [Utils],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,6 +1,6 @@
 import {  Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 
 import { PokemonI } from 'src/app/modelos/pokemon.interface';
 
@@ -19,15 +19,15 @@ export class EditPokemonComponent implements OnInit {
   
    
    pokemonToEdit!: PokemonI;
-   editForm: FormGroup = new FormGroup({
-      id: new FormControl(''),
-      name: new FormControl(''),
-      lvl: new FormControl(''),
-      type: new FormControl(''),
-      image: new FormControl(''),
-      evolutionId: new FormControl(''),
-      abilities: new FormControl('')
-  });
+   editForm: FormGroup = this.fb.group({
+      id: [0,[Validators.required]],
+      name: ["",[Validators.required]],
+      lvl: [0,[Validators.required]],
+      type: ["",[Validators.required]],//toString(),
+      image: "",
+      evolutionId: "",
+      abilities: [{name: "",description: ""}]
+   });
 
   constructor(private api:ApiService, 
     private activerouter:ActivatedRoute, 
@@ -46,45 +46,35 @@ export class EditPokemonComponent implements OnInit {
   setPokemon(data:any){
     
     this.pokemonToEdit = data;
-    /*
+
     this.editForm = this.fb.group({
       id: [this.pokemonToEdit.id,[Validators.required]],
       name: [this.pokemonToEdit.name,[Validators.required]],
-      lvl: this.pokemonToEdit.lvl.toString(),
-      type: this.pokemonToEdit.type.toString(),
+      lvl: [this.pokemonToEdit.lvl,[Validators.required]],
+      type: [this.pokemonToEdit.type,[Validators.required]],
       image: this.pokemonToEdit.image,
       evolutionId: this.pokemonToEdit.evolutionId,
-      abilities: this.pokemonToEdit.abilities,
+      abilities: this.pokemonToEdit.abilities
     });
-    */
-    this.editForm.setValue({
-      'id': this.pokemonToEdit.id,
-      'name': this.pokemonToEdit.name,
-      'lvl': this.pokemonToEdit.lvl.toString(),
-      'type': this.pokemonToEdit.type.toString(),
-      'image': this.pokemonToEdit.image,
-      'evolutionId': this.pokemonToEdit.evolutionId,
-      'abilities': this.pokemonToEdit.abilities,
-    });
-  
+    
   }
 
   postForm(form:FormGroup){
+      
+      form.patchValue({ type: [form.value.type.toString()]});
+      form.patchValue({ abilities: [form.value.abilities]});
+      
+      //lo hago porque si se modifica el campo type se vuelve string y para el put necesito que sea un [string]
+      //y en el caso del campo abilities por alguna razon al inicializarlo se transforma de [abilities] a abilities
 
       const modalRef = this.modalService.open(ModalComponent).result
       .then( (result) =>{
-
-          form.patchValue({ lvl:  Number(form.value.lvl)});
-          form.patchValue({ type: [form.value.type]});
-          // cambio el tipo del pokemon de string a array para poder hacer el put correctamente
-    
+          
           this.api.putPokemon(form.value).subscribe((data: any) =>{
     
-            
-            form.patchValue({ type: form.value.type.toString()});
-            form.patchValue({ lvl: form.value.lvl.toString()});
+          form.patchValue({ type: form.value.type.toString()});
     
-            this.router.navigate(['dashboard']);
+          this.router.navigate(['dashboard']);
     
           },(error: any) =>{
             console.log('error catcheado',error);
@@ -94,7 +84,7 @@ export class EditPokemonComponent implements OnInit {
             modalRef.componentInstance.message = "error in EditPokemon, error: " + error.message;
     
             form.patchValue({ type: form.value.type.toString()});
-            form.patchValue({ lvl: form.value.lvl.toString()});
+            
             //mostrar al usuario que hubo un error
           })
       },(reason) =>{/*por ahora no hace nada solo lo hice para agarrar el caso en que se cierra el modal */}

@@ -9,7 +9,7 @@
                 </div>
                 <div class="col">
                 <label for="exampleFormControlInput1">lvl</label>
-                <input type="text" class="form-control" placeholder="pokemon lvl" formControlName="lvl">
+                <input type="number" class="form-control" placeholder="pokemon lvl" formControlName="lvl">
                 </div>
                 <div class="col">
                 <label for="exampleFormControlInput1">type</label>
@@ -24,7 +24,7 @@
                 
                 <div class="col">
                 <label for="exampleFormControlInput1">evolutionId</label>
-                <input type="text" class="form-control" placeholder="pokemon evolutionId" formControlName="evolutionId">
+                <input type="number" class="form-control" placeholder="pokemon evolutionId" formControlName="evolutionId">
                 </div>
             </div>
             <div class="form-group">
@@ -36,7 +36,7 @@
                 <input type="text" class="form-control" placeholder="pokemon abilities" formControlName="description">
             </div>
             <br><br>
-            <button type="submit" class="btn btn-primary">create pokemon</button>
+            <button type="submit" class="btn btn-primary" [disabled]="newForm.invalid" >create pokemon</button>
         </form>
     </div>
 <app-footer></app-footer>

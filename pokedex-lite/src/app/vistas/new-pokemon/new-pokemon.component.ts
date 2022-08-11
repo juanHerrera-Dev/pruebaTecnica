@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalComponent } from 'src/app/modal/modal.component';
@@ -17,24 +17,17 @@ import { ApiService } from 'src/app/servicios/api/api.service';
 export class NewPokemonComponent implements OnInit {
 
   pokemonToCreate!: PokemonI;
-  newForm = new FormGroup({
-        id: new FormControl(this.activerouter.snapshot.paramMap.get('id')),
-        name: new FormControl(''),
-        lvl: new FormControl(''),
-        type: new FormControl(''),
-        image: new FormControl(''),
-        evolutionId: new FormControl(''),
-        abilities: new FormControl(''),
-        description: new FormControl('')
-  });
-
+  newForm!:FormGroup;
+  
   constructor(private api:ApiService, 
               private router:Router, 
               private modalService: NgbModal,
               private activerouter:ActivatedRoute,
+              private fb: FormBuilder,
             ) { }
 
   ngOnInit(): void {
+    this.initForm();
   }
 
   postForm(form:FormGroup){
@@ -71,5 +64,17 @@ export class NewPokemonComponent implements OnInit {
           })
           },(reason) =>{/*por ahora no hace nada solo lo hice para agarrar el caso en que se cierra el modal */}
     )
-  }  
+  }
+  private initForm():void{
+    this.newForm = this.fb.group({
+      id: this.activerouter.snapshot.paramMap.get('id'),
+      name: ["",[Validators.required]],
+      lvl: [0,[Validators.required]],
+      type:["",[Validators.required]],
+      image: "",
+      evolutionId: 0,
+      abilities: ["",[Validators.required]],
+      description: ["",[Validators.required]]
+    });
+  }
 }
