@@ -35,7 +35,7 @@ export class DashboardComponent implements OnInit {
     this.api.getAllPokemons(userId?userId:"").subscribe(data =>{
       this.pokemons = this.filterPokemons(data);
       this.setNewPokemonId();
-      console.log("el id del nuevo pokemon es:" + this.newPokemonId);
+      
     },error => {
       console.log("se produjo un error al cargar el dashboard" + error.message)
     }

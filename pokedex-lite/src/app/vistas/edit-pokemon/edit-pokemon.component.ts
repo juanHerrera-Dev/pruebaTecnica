@@ -105,6 +105,13 @@ export class EditPokemonComponent implements OnInit {
       
     })
   }
-      
+  
+  inputClass(inputName: string):string{
+
+    if(this.editForm.get(inputName)?.touched && this.editForm.get(inputName)?.errors?.['required']){
+      return 'border border-danger'
+    }
+    else{return ""}
+  }
       
 }

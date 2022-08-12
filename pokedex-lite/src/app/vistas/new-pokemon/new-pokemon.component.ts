@@ -69,12 +69,20 @@ export class NewPokemonComponent implements OnInit {
     this.newForm = this.fb.group({
       id: this.activerouter.snapshot.paramMap.get('id'),
       name: ["",[Validators.required]],
-      lvl: [0,[Validators.required]],
+      lvl: [null,[Validators.required]],
       type:["",[Validators.required]],
       image: "",
-      evolutionId: 0,
+      evolutionId: null,
       abilities: ["",[Validators.required]],
       description: ["",[Validators.required]]
     });
+    
+  }
+  inputClass(inputName: string):string{
+
+    if(this.newForm.get(inputName)?.touched && this.newForm.get(inputName)?.errors?.['required']){
+      return 'border border-danger'
+    }
+    else{return ""}
   }
 }

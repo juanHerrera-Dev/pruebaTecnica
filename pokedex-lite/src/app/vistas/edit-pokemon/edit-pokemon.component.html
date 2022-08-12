@@ -7,37 +7,36 @@
               <div class="form-group row">
                 <div class="col">
                   <label for="exampleFormControlInput1">name</label>
-                  <input type="text" class="form-control" placeholder="pokemon name" formControlName="name">
-                  <div
-                    *ngIf="editForm.get('name')?.touched && editForm.get('name')?.errors?.['required']"
-                    class="alert alert-danger"
-                  >
-                    *este campo es requerido
-                  </div>
+                  <input [ngClass]="(inputClass('name'))" type="text" class="form-control" placeholder="pokemon name" formControlName="name">
+                  
                 </div>
                 <div class="col">
                   <label for="exampleFormControlInput1">lvl</label>
-                  <input type="number" class="form-control" placeholder="pokemon lvl" formControlName="lvl">
+                  <input [ngClass]="(inputClass('lvl'))" type="number" class="form-control" placeholder="pokemon lvl" formControlName="lvl">
                 </div>
                 <div class="col">
                   <label for="exampleFormControlInput1">type</label>
-                  <input type="text" class="form-control" placeholder="pokemon type" formControlName="type">
+                  <input [ngClass]="(inputClass('type'))" type="text" class="form-control" placeholder="pokemon type" formControlName="type">
                 </div>
               </div>
-              
+              <br><br>
+              <button type="submit" class="btn btn-primary" [disabled]="editForm.invalid">update pokemon</button>
+          </form>
+    </div>
+<app-footer></app-footer>
+
+
               <!--
               <div class="form-group">
                 <label for="exampleFormControlInput1">abilities</label>
                 <input type="text" class="form-control" placeholder="pokemon abilities" formControlName="abilities">
               </div>
+
+|             <div
+                    *ngIf="editForm.get('name')?.touched && editForm.get('name')?.errors?.['required']"
+                    class="alert alert-danger"
+                  >
+                    *este campo es requerido
+              </div>
+
               -->
-              
-              <br><br>
-              <button type="submit" class="btn btn-primary" [disabled]="editForm.invalid">update pokemon</button>
-              <p>
-              
-              </p>
-          </form>
-      
-    </div>
-<app-footer></app-footer>
